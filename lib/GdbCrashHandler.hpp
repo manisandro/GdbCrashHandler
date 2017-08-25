@@ -20,7 +20,6 @@
 #define GDBCRASHHANDLER_HPP
 
 #include <functional>
-#include <QIcon>
 #include <QString>
 
 #if defined(GDBCRASHHANDLER_LIBRARY)
