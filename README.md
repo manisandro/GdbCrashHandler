@@ -9,6 +9,8 @@ It works by spawing a `QProcess` in the signal handler, re-starting the
 application with arguments `--crashhandle <pid>`, at which point
 `GdbCrashHandler` takes over.
 
+![screenshot](https://raw.githubusercontent.com/manisandro/GdbCrashHandler/gh-pages/GdbCrashHandler.png)
+
 Usage:
 ------
 
