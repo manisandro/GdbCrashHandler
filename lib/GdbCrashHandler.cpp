@@ -23,6 +23,7 @@
 #include <cstring>
 #include <iostream>
 #include <QApplication>
+#include <QCommandLineParser>
 #ifdef Q_OS_LINUX
 #include <sys/prctl.h>
 #endif
@@ -38,7 +39,7 @@ static void signalHandler(int signal) {
 	QStringList args;
 	if(gSaveCallback) {
 		QString fileName = gSaveCallback();
-		args << "--savefile" << fileName;
+		args << "--crashsavefile" << fileName;
 	}
 	args << "--crashhandle" << QString::number(QApplication::applicationPid());
 	process.start(QApplication::applicationFilePath(), args);
@@ -69,13 +70,22 @@ static void terminateHandler() {
 }
 #endif
 
-void init(int argc, char* argv[], const Configuration& config, saveCallback_t saveCallback)
+void init(const Configuration& config, saveCallback_t saveCallback)
 {
-	if(argc > 2 && std::strcmp(argv[1], "--crashhandle") == 0) {
-		int pid = std::atoi(argv[2]);
+	QCommandLineParser parser;
+	QCommandLineOption crashHandleOption("crashhandle");
+	crashHandleOption.setValueName("pid");
+	parser.addOption(crashHandleOption);
+	QCommandLineOption saveFileOption("crashsavefile");
+	saveFileOption.setValueName("path");
+	parser.addOption(saveFileOption);
+	parser.process(*qApp);
+
+	if(parser.isSet(crashHandleOption)) {
+		int pid = parser.value(crashHandleOption).toInt();
 		QString saveFile;
-		if(argc > 4 && std::strcmp(argv[3], "--savefile")) {
-			saveFile = argv[4];
+		if(parser.isSet(saveFileOption)) {
+			saveFile = parser.value(saveFileOption);
 		}
 		GdbCrashHandlerDialog dialog(config, pid, saveFile);
 		dialog.show();

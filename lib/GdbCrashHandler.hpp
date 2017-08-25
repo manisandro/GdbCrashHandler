@@ -33,7 +33,7 @@ struct Configuration {
 };
 typedef QString(*saveCallback_t)();
 
-void init(int argc, char* argv[], const Configuration& config, saveCallback_t saveCallback = nullptr);
+void init(const Configuration& config, saveCallback_t saveCallback = nullptr);
 
 }
 

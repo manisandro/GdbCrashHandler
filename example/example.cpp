@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 	config.applicationIcon = ":/icons/bug.png";
 	config.submitMethod = GdbCrashHandler::Configuration::SubmitService;
 	config.submitAddress = "http://127.0.0.1/report.php";
-	GdbCrashHandler::init(argc, argv, config);
+	GdbCrashHandler::init(config);
 
 	CrashExample example;
 	example.show();
