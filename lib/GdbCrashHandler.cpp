@@ -36,7 +36,8 @@ static void signalHandler(int signal) {
 	std::signal(signal, nullptr);
 
 	QProcess process;
-	QStringList args;
+	QStringList args = QApplication::arguments();
+	args.removeFirst(); // Remove program path
 	if(gSaveCallback) {
 		QString fileName = gSaveCallback();
 		args << "--crashsavefile" << fileName;
