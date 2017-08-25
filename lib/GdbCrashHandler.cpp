@@ -90,7 +90,22 @@ void init(const Configuration& config, saveCallback_t saveCallback)
 		}
 		GdbCrashHandlerDialog dialog(config, pid, saveFile);
 		dialog.show();
-		std::exit(qApp->exec());
+		int status = qApp->exec();
+		if(dialog.restartApplication()) {
+			QStringList arguments = qApp->arguments();
+			arguments.removeFirst(); // Remove program path
+			int pos = arguments.indexOf("--crashhandle");
+			// Remove both key and value
+			arguments.removeAt(pos);
+			arguments.removeAt(pos);
+			pos = arguments.indexOf("--crashsavefile");
+			if(pos != 1) {
+				arguments.removeAt(pos);
+				arguments.removeAt(pos);
+			}
+			QProcess::startDetached(QApplication::applicationFilePath(), arguments);
+		}
+		std::exit(status);
 	} else {
 		gSaveCallback = saveCallback;
 		std::signal(SIGSEGV, signalHandler);

@@ -28,6 +28,7 @@ class GdbCrashHandlerDialog : public QDialog {
 
 public:
 	explicit GdbCrashHandlerDialog(const GdbCrashHandler::Configuration& config, int pid, const QString& savefile, QWidget *parent = 0);
+	bool restartApplication() const{ return ui.checkBoxRestart->isChecked(); }
 
 private:
 	Ui::GdbCrashHandlerDialog ui;
