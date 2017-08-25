@@ -22,13 +22,13 @@ Initialize the crash handler just after the `QApplication` instance has been cre
     config.applicationIcon = ":/icons/bug.png";
     config.submitMethod = GdbCrashHandler::Configuration::SubmitService;
     config.submitAddress = "http://127.0.0.1/report.php";
-    GdbCrashHandler::init(argc, argv, config, /*optional*/ fileSaveCallback);
+    GdbCrashHandler::init(config, /*optional*/ fileSaveCallback);
 
-See `example/example.cpp`.
+See [example/example.cpp](https://github.com/manisandro/GdbCrashHandler/blob/master/example/example.cpp).
 
 Submit service:
 ---------------
 
 `GdbCrashHandler` submits the reports to a web service, using the same format as
 [CrashRpt](http://crashrpt.sourceforge.net/docs/html/sending_error_reports.html),
-see `service/report.php`.
+see [service/report.php](https://github.com/manisandro/GdbCrashHandler/blob/master/service/report.php).
