@@ -101,4 +101,9 @@ void init(const Configuration& config, saveCallback_t saveCallback)
 	}
 }
 
+void setSaveCallback(saveCallback_t saveCallback)
+{
+	gSaveCallback = saveCallback;
+}
+
 }

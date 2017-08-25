@@ -35,6 +35,7 @@ struct Configuration {
 typedef std::function<QString()> saveCallback_t;
 
 void init(const Configuration& config, saveCallback_t saveCallback = nullptr);
+void setSaveCallback(saveCallback_t saveCallback);
 
 }
 
