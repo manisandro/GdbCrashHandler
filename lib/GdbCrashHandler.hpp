@@ -23,9 +23,15 @@
 #include <QIcon>
 #include <QString>
 
+#if defined(GDBCRASHHANDLER_LIBRARY)
+#  define GDBCRASHHANDLER_API Q_DECL_EXPORT
+#else
+#  define GDBCRASHHANDLER_API Q_DECL_IMPORT
+#endif
+
 namespace GdbCrashHandler {
 
-struct Configuration {
+struct GDBCRASHHANDLER_API Configuration {
 	QString applicationName;
 	QString applicationVersion;
 	QString applicationIcon;
@@ -34,8 +40,8 @@ struct Configuration {
 };
 typedef std::function<QString()> saveCallback_t;
 
-void init(const Configuration& config, saveCallback_t saveCallback = nullptr);
-void setSaveCallback(saveCallback_t saveCallback);
+void GDBCRASHHANDLER_API init(const Configuration& config, saveCallback_t saveCallback = nullptr);
+void GDBCRASHHANDLER_API setSaveCallback(saveCallback_t saveCallback);
 
 }
 

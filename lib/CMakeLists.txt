@@ -17,6 +17,8 @@ set(FORMS
 
 qt5_wrap_ui(FORM_HEADERS ${FORMS})
 
+add_definitions(-DGDBCRASHHANDLER_LIBRARY)
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${QUAZIP_INCLUDE_DIR})
 
 add_library(GdbCrashHandler SHARED ${SRCS} ${HDRS} ${FORM_HEADERS})
