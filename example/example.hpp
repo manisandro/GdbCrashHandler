@@ -18,10 +18,16 @@
 
 #include <QDialog>
 
+class QPlainTextEdit;
+
 class CrashExample : public QDialog {
 	Q_OBJECT
 public:
-	CrashExample(QWidget* parent = 0);
+	CrashExample(const QString& fileName, QWidget* parent = 0);
+	QString crashSave() const;
+
+private:
+	QPlainTextEdit* mTextEdit;
 
 private slots:
 	void crash();

@@ -21,18 +21,27 @@
 #include <GdbCrashHandler.hpp>
 #include <QApplication>
 #include <QDialogButtonBox>
+#include <QDir>
 #include <QLabel>
+#include <QPlainTextEdit>
 #include <QPushButton>
+#include <QTemporaryFile>
 #include <QTextStream>
 #include <QVBoxLayout>
 
 
-CrashExample::CrashExample(QWidget *parent)
+CrashExample::CrashExample(const QString& fileName, QWidget *parent)
 	: QDialog(parent)
 {
 	setWindowIcon(QIcon(":/icons/bug.png"));
 	setWindowTitle("Crash Example");
 	setLayout(new QVBoxLayout());
+	mTextEdit = new QPlainTextEdit();
+	QFile file(fileName);
+	if(file.open(QIODevice::ReadOnly)) {
+		mTextEdit->setPlainText(file.readAll());
+	}
+	layout()->addWidget(mTextEdit);
 	layout()->addWidget(new QLabel("Press \"Crash\" to make the application crash."));
 	QDialogButtonBox* bbox = new QDialogButtonBox();
 	QPushButton* crashButton = bbox->addButton("Crash", QDialogButtonBox::ActionRole);
@@ -45,6 +54,16 @@ void CrashExample::crash()
 	QTextStream(stdout) << (*((int*)0)) << endl;
 }
 
+QString CrashExample::crashSave() const
+{
+	QTemporaryFile file(QDir::home().absoluteFilePath("crashSave_XXXXXX.txt"));
+	file.setAutoRemove(false);
+	if(file.open()) {
+		file.write(mTextEdit->toPlainText().toLocal8Bit());
+		return file.fileName();
+	}
+	return QString();
+}
 
 int main(int argc, char* argv[])
 {
@@ -58,7 +77,8 @@ int main(int argc, char* argv[])
 	config.submitAddress = "http://127.0.0.1/report.php";
 	GdbCrashHandler::init(config);
 
-	CrashExample example;
+	CrashExample example(argc > 1 ? argv[1] : "");
+	GdbCrashHandler::setSaveCallback(std::bind(&CrashExample::crashSave, &example));
 	example.show();
 	return app.exec();
 }
