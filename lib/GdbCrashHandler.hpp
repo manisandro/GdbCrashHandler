@@ -19,6 +19,7 @@
 #ifndef GDBCRASHHANDLER_HPP
 #define GDBCRASHHANDLER_HPP
 
+#include <functional>
 #include <QIcon>
 #include <QString>
 
@@ -31,7 +32,7 @@ struct Configuration {
 	enum SubmitMethod {SubmitService} submitMethod;
 	QString submitAddress;
 };
-typedef QString(*saveCallback_t)();
+typedef std::function<QString()> saveCallback_t;
 
 void init(const Configuration& config, saveCallback_t saveCallback = nullptr);
 
