@@ -24,6 +24,9 @@ set_target_properties(GdbCrashHandler PROPERTIES
   VERSION ${GDBCH_LIB_VERSION}
   SOVERSION ${GDBCH_SO_VERSION}
 )
+if(WIN32)
+    set_target_properties(GdbCrashHandler PROPERTIES SUFFIX "-${GDBCH_SO_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+endif(WIN32)
 target_link_libraries(GdbCrashHandler Qt5::Widgets Qt5::Network ${QUAZIP_LIBRARIES})
 
 install(TARGETS GdbCrashHandler
@@ -37,3 +40,6 @@ file(GLOB TS locale/*.ts)
 qt5_add_translation(QM ${TS})
 add_custom_target(translations ALL DEPENDS ${QM})
 install(FILES ${QM} DESTINATION share/GdbCrashHandler)
+
+configure_file(GdbCrashHandler.pc.in GdbCrashHandler.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/GdbCrashHandler.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)

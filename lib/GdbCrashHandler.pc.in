@@ -1,0 +1,9 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+libdir=${prefix}/@PC_LIB_DIR@
+includedir=${prefix}/@PC_INCLUDE_DIR@/
+
+Name: GdbCrashHandler
+Description: A crash handler for Qt based applications using gdb
+Version: @SVG2SVGT@
+Libs: -L${libdir} -lGdbCrashHandler
+Cflags: -I${includedir}
