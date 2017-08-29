@@ -80,7 +80,7 @@ void init(const Configuration& config, saveCallback_t saveCallback)
 	QCommandLineOption saveFileOption("crashsavefile");
 	saveFileOption.setValueName("path");
 	parser.addOption(saveFileOption);
-	parser.process(*qApp);
+	parser.parse(qApp->arguments());
 
 	if(parser.isSet(crashHandleOption)) {
 		int pid = parser.value(crashHandleOption).toInt();
