@@ -17,8 +17,6 @@ set(FORMS
 
 qt5_wrap_ui(FORM_HEADERS ${FORMS})
 
-add_definitions(-DGDBCRASHHANDLER_LIBRARY)
-
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${QUAZIP_INCLUDE_DIR})
 
 add_library(GdbCrashHandler SHARED ${SRCS} ${HDRS} ${FORM_HEADERS})
@@ -34,3 +32,8 @@ install(TARGETS GdbCrashHandler
     LIBRARY DESTINATION ${LIB_INSTALL_DIR} COMPONENT libraries
 )
 install(FILES GdbCrashHandler.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/GdbCrashHandler/)
+
+file(GLOB TS locale/*.ts)
+qt5_add_translation(QM ${TS})
+add_custom_target(translations ALL DEPENDS ${QM})
+install(FILES ${QM} DESTINATION share/GdbCrashHandler)
