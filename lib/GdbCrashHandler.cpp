@@ -49,7 +49,7 @@ static void signalHandler(int signal) {
 	prctl(PR_SET_PTRACER, process.pid(), 0, 0, 0);
 #endif
 	process.waitForFinished(-1);
-	std::raise(signal);
+	std::exit(0);
 }
 
 #ifndef __ARMEL__
