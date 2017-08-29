@@ -24,6 +24,7 @@ string(REGEX REPLACE "^${CMAKE_INSTALL_PREFIX}/" "" PC_LIB_DIR ${LIB_INSTALL_DIR
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(QuaZip5 REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
 set(CMAKE_AUTOMOC ON)
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_TOLOWER)
