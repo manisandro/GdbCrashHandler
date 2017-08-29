@@ -41,7 +41,7 @@ GdbCrashHandlerDialog::GdbCrashHandlerDialog(const GdbCrashHandler::Configuratio
 	setWindowIcon(QIcon(config.applicationIcon));
 
 	if(!savefile.isEmpty()) {
-		ui.labelAutosave->setText(tr("<b>Your work was saved to <i>%1</i></b>.").arg(savefile));
+		ui.labelAutosave->setText(tr("<b>Your work was saved to <i>%1</i>.</b>").arg(savefile));
 	}
 
 	ui.labelIcon->setPixmap(QPixmap(config.applicationIcon));
