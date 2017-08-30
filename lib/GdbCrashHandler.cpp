@@ -71,7 +71,7 @@ static void terminateHandler() {
 }
 #endif
 
-void init(const Configuration& config, saveCallback_t saveCallback)
+void GDBCRASHHANDLER_API init(const Configuration& config, saveCallback_t saveCallback)
 {
 	QCommandLineParser parser;
 	QCommandLineOption crashHandleOption("crashhandle");
@@ -116,7 +116,7 @@ void init(const Configuration& config, saveCallback_t saveCallback)
 	}
 }
 
-void setSaveCallback(saveCallback_t saveCallback)
+void GDBCRASHHANDLER_API setSaveCallback(saveCallback_t saveCallback)
 {
 	gSaveCallback = saveCallback;
 }
