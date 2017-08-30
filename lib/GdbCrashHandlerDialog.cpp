@@ -45,6 +45,7 @@ GdbCrashHandlerDialog::GdbCrashHandlerDialog(const GdbCrashHandler::Configuratio
 	}
 
 	ui.labelIcon->setPixmap(QPixmap(config.applicationIcon));
+	ui.labelIcon->setScaledContents(true);
 	ui.labelTitle->setText(ui.labelTitle->text().arg(config.applicationName));
 
 	ui.frameDetails->setVisible(false);
