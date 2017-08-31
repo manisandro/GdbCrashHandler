@@ -150,7 +150,7 @@ void GdbCrashHandlerDialog::sendReport()
 		QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
 		QHttpPart filePart;
-		filePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"crashrpt\"; filename=\"stacktrace.txt\""));
+		filePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"crashrpt\"; filename=\"stacktrace.zip\""));
 		filePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/octet-stream"));
 		filePart.setBody(report);
 		multiPart->append(filePart);
