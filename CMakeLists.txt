@@ -8,7 +8,7 @@ set(GDBCH_VERSION 0.1.0)
 # Soname
 # MAJOR is incremented when symbols are removed or changed in an incompatible way
 # MINOR is incremented when new symbols are added
-set(GDBCH_LIB_MAJOR 0)
+set(GDBCH_LIB_MAJOR 1)
 set(GDBCH_LIB_MINOR 0)
 
 

@@ -36,6 +36,7 @@ struct GDBCRASHHANDLER_API Configuration {
 	QString applicationIcon;
 	enum SubmitMethod {SubmitService} submitMethod;
 	QString submitAddress;
+	QString gdbBacktraceCommand; // if empty, uses "thread apply all bt"
 };
 typedef std::function<QString()> saveCallback_t;
 

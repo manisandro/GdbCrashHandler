@@ -106,12 +106,11 @@ void GdbCrashHandlerDialog::handleGdbFinished(int exitCode, QProcess::ExitStatus
 
 void GdbCrashHandlerDialog::regenerateBacktrace() {
 	ui.pushButtonRegenerate->setVisible(false);
-	ui.progressBarBacktrace->setVisible(true);
+	ui.progressBar->setVisible(true);
 
 	mGdbProcess.start("gdb", QStringList() << "-p" << QString::number(mPid));
 	mGdbProcess.write("set pagination off\n");
-	mGdbProcess.write("bt\n");
-	mGdbProcess.write("thread apply all bt full\n");
+	mGdbProcess.write(mConfig.gdbBacktraceCommand.isEmpty() ? "thread apply all bt\n" : mConfig.gdbBacktraceCommand.toLocal8Bit());
 	mGdbProcess.write("quit\n");
 }
 
