@@ -81,6 +81,8 @@ void GdbCrashHandlerDialog::appendGdbOutput() {
 }
 
 void GdbCrashHandlerDialog::handleGdbFinished(int exitCode, QProcess::ExitStatus exitStatus) {
+	ui.widgetBusy->setVisible(false);
+	ui.labelBusyText->setText("");
 	ui.progressBarBacktrace->setVisible(false);
 	ui.pushButtonRegenerate->setVisible(true);
 	if(exitCode != 0 || exitStatus != QProcess::NormalExit) {
@@ -106,7 +108,10 @@ void GdbCrashHandlerDialog::handleGdbFinished(int exitCode, QProcess::ExitStatus
 
 void GdbCrashHandlerDialog::regenerateBacktrace() {
 	ui.pushButtonRegenerate->setVisible(false);
-	ui.progressBar->setVisible(true);
+	ui.progressBarBacktrace->setVisible(true);
+	ui.labelBusyText->setText(tr("Gathering information..."));
+	ui.widgetBusy->setVisible(true);
+	ui.plainTextEditBacktrace->clear();
 
 	mGdbProcess.start("gdb", QStringList() << "-p" << QString::number(mPid));
 	mGdbProcess.write("set pagination off\n");
@@ -132,6 +137,8 @@ void GdbCrashHandlerDialog::sendReport()
 		connect(&mGdbProcess, SIGNAL(finished(int)), &evLoop, SLOT(quit()));
 		evLoop.exec(QEventLoop::ExcludeUserInputEvents);
 	}
+	ui.labelBusyText->setText(tr("Sending report..."));
+	ui.widgetBusy->setVisible(true);
 	if(mConfig.submitMethod == GdbCrashHandler::Configuration::SubmitService && !mConfig.submitAddress.isEmpty()) {
 		QByteArray report;
 		QBuffer buf(&report);
@@ -189,4 +196,6 @@ void GdbCrashHandlerDialog::sendReport()
 	}
 	setEnabled(true);
 	unsetCursor();
+	ui.widgetBusy->setVisible(false);
+	ui.labelBusyText->setText("");
 }
