@@ -110,6 +110,8 @@ void GDBCRASHHANDLER_API init(const Configuration& config, saveCallback_t saveCa
 		gSaveCallback = saveCallback;
 		std::signal(SIGSEGV, signalHandler);
 		std::signal(SIGABRT, signalHandler);
+		std::signal(SIGILL,  signalHandler);
+		std::signal(SIGFPE,  signalHandler);
 	#ifndef __ARMEL__
 		std::set_terminate(terminateHandler);
 	#endif
