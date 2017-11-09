@@ -27,10 +27,14 @@
 #ifdef Q_OS_LINUX
 #include <sys/prctl.h>
 #endif
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
 
 namespace GdbCrashHandler {
 
 static saveCallback_t gSaveCallback = nullptr;
+static bool gInitialized = true;
 
 static void signalHandler(int signal) {
 	std::signal(signal, nullptr);
@@ -68,6 +72,40 @@ static void terminateHandler() {
 		std::cerr << "Terminated due to unknown reason" << std::endl;
 	}
 	signalHandler(SIGABRT);
+}
+#endif
+
+#ifdef Q_OS_WIN
+extern "C" {
+BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID /*lpReserved*/)
+{
+	if(gInitialized) {
+		if(dwReason==DLL_THREAD_ATTACH)
+		{
+			std::signal(SIGSEGV, signalHandler);
+			std::signal(SIGABRT, signalHandler);
+			std::signal(SIGILL,  signalHandler);
+			std::signal(SIGFPE,  signalHandler);
+	#ifndef __ARMEL__
+			std::set_terminate(terminateHandler);
+	#endif
+			std::set_unexpected(terminateHandler);
+		}
+		else  if(dwReason==DLL_THREAD_DETACH)
+		{
+			std::signal(SIGSEGV, 0);
+			std::signal(SIGABRT, 0);
+			std::signal(SIGILL,  0);
+			std::signal(SIGFPE,  0);
+	#ifndef __ARMEL__
+			std::set_terminate(0);
+	#endif
+			std::set_unexpected(0);
+		}
+	}
+
+	return TRUE;
+}
 }
 #endif
 
@@ -112,9 +150,11 @@ void GDBCRASHHANDLER_API init(const Configuration& config, saveCallback_t saveCa
 		std::signal(SIGABRT, signalHandler);
 		std::signal(SIGILL,  signalHandler);
 		std::signal(SIGFPE,  signalHandler);
-	#ifndef __ARMEL__
+#ifndef __ARMEL__
 		std::set_terminate(terminateHandler);
-	#endif
+#endif
+		std::set_unexpected(terminateHandler);
+		gInitialized = true;
 	}
 }
 
