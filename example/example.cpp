@@ -27,7 +27,15 @@
 #include <QPushButton>
 #include <QTemporaryFile>
 #include <QTextStream>
+#include <QThread>
 #include <QVBoxLayout>
+
+class CrashThread : public QThread {
+private:
+	void run() {
+		QTextStream(stdout) << (*((int*)0)) << endl;
+	}
+};
 
 
 CrashExample::CrashExample(const QString& fileName, QWidget *parent)
@@ -46,12 +54,21 @@ CrashExample::CrashExample(const QString& fileName, QWidget *parent)
 	QDialogButtonBox* bbox = new QDialogButtonBox();
 	QPushButton* crashButton = bbox->addButton("Crash", QDialogButtonBox::ActionRole);
 	connect(crashButton, &QPushButton::clicked, this, &CrashExample::crash);
+	QPushButton* crashThreadButton = bbox->addButton("Crash in thread", QDialogButtonBox::ActionRole);
+	connect(crashThreadButton, &QPushButton::clicked, this, &CrashExample::crashInThread);
 	layout()->addWidget(bbox);
 }
 
 void CrashExample::crash()
 {
 	QTextStream(stdout) << (*((int*)0)) << endl;
+}
+
+void CrashExample::crashInThread()
+{
+	CrashThread thread;
+	thread.start();
+	thread.wait();
 }
 
 QString CrashExample::crashSave() const

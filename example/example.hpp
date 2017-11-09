@@ -31,4 +31,5 @@ private:
 
 private slots:
 	void crash();
+	void crashInThread();
 };
