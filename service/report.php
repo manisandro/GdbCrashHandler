@@ -51,8 +51,7 @@ if(!array_key_exists("crashguid", $_POST))
 
 $crash_guid = $_POST["crashguid"];
 checkOK($crash_guid);
-if(strlen($crash_guid)!=36)
-{
+if (!preg_match('/^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$/', $crash_guid)) {
   done(450, "Crash GUID has wrong length.");
 }
 
