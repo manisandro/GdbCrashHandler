@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../GdbCrashHandlerDialog.ui" line="150"/>
-        <source>Plase send us this report to help fix the problem and improve this software.</source>
+        <source>Please send us this report to help fix the problem and improve this software.</source>
         <translation>Bitte schicken Sie diesen Bericht, sodass der Fehler korrigiert werden kann.</translation>
     </message>
     <message>

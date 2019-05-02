@@ -323,7 +323,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Plase send us this report to help fix the problem and improve this software.</string>
+         <string>Please send us this report to help fix the problem and improve this software.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
