@@ -137,7 +137,7 @@ void GDBCRASHHANDLER_API init(const Configuration& config, saveCallback_t saveCa
 			arguments.removeAt(pos);
 			arguments.removeAt(pos);
 			pos = arguments.indexOf("--crashsavefile");
-			if(pos != 1) {
+			if(pos != -1) {
 				arguments.removeAt(pos);
 				arguments.removeAt(pos);
 			}
