@@ -44,6 +44,7 @@ private slots:
 	void handleGdbFinished(int exitCode, QProcess::ExitStatus exitStatus);
 	void regenerateBacktrace();
 	void sendReport();
+	void killGdb();
 };
 
 #endif // GDBCRASHHANDLERDIALOG_HPP
