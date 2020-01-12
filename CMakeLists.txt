@@ -37,3 +37,9 @@ endif()
 # Subdirectories
 add_subdirectory(lib)
 add_subdirectory(example)
+
+# Dist
+ADD_CUSTOM_TARGET(dist
+    COMMAND git archive --format=tar --prefix=${CMAKE_PROJECT_NAME}-${GDBCH_VERSION}/ HEAD | xz > ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}-${GDBCH_VERSION}.tar.xz
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
