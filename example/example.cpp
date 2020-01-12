@@ -45,9 +45,12 @@ CrashExample::CrashExample(const QString& fileName, QWidget *parent)
 	setWindowTitle("Crash Example");
 	setLayout(new QVBoxLayout());
 	mTextEdit = new QPlainTextEdit();
-	QFile file(fileName);
-	if(file.open(QIODevice::ReadOnly)) {
-		mTextEdit->setPlainText(file.readAll());
+	QFile file;
+	if(!fileName.isEmpty()) {
+		file.setFileName(fileName);
+		if(file.open(QIODevice::ReadOnly)) {
+			mTextEdit->setPlainText(file.readAll());
+		}
 	}
 	layout()->addWidget(mTextEdit);
 	layout()->addWidget(new QLabel("Press \"Crash\" to make the application crash."));
