@@ -55,6 +55,7 @@ GdbCrashHandlerDialog::GdbCrashHandlerDialog(const GdbCrashHandler::Configuratio
 	connect(ui.checkBoxInfo, &QCheckBox::toggled, ui.frameInfo, &QFrame::setVisible);
 	connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &GdbCrashHandlerDialog::killGdb);
 
 	mSendButton = ui.buttonBox->addButton(tr("Send report"), QDialogButtonBox::ActionRole);
 	connect(mSendButton, &QPushButton::clicked, this, &GdbCrashHandlerDialog::sendReport);
@@ -198,4 +199,9 @@ void GdbCrashHandlerDialog::sendReport()
 	unsetCursor();
 	ui.widgetBusy->setVisible(false);
 	ui.labelBusyText->setText("");
+}
+
+void GdbCrashHandlerDialog::killGdb()
+{
+	mGdbProcess.kill();
 }
