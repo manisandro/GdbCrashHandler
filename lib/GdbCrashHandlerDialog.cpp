@@ -146,7 +146,9 @@ void GdbCrashHandlerDialog::sendReport()
 		QuaZip quazip(&buf);
 		quazip.open(QuaZip::mdCreate);
 		QuaZipFile quazipfile(&quazip);
-		quazipfile.open(QIODevice::WriteOnly, QuaZipNewInfo("stacktrace.txt"));
+		QuaZipNewInfo info("stacktrace.txt");
+		info.setPermissions( QFile::ReadOwner | QFile::ReadUser | QFile::ReadGroup | QFile::ReadOther );
+		quazipfile.open(QIODevice::WriteOnly, info);
 		quazipfile.write(ui.plainTextEditBacktrace->toPlainText().toLocal8Bit());
 		quazipfile.close();
 		quazip.close();
