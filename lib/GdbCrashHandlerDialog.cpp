@@ -30,7 +30,7 @@
 #include <QTimer>
 #include <QUrlQuery>
 #include <QUuid>
-#include <quazipfile.h>
+#include <quazip/quazipfile.h>
 
 GdbCrashHandlerDialog::GdbCrashHandlerDialog(const GdbCrashHandler::Configuration& config, int pid, const QString& savefile, QWidget *parent)
 	: QDialog(parent)
