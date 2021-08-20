@@ -24,8 +24,7 @@ string(REGEX REPLACE "^${CMAKE_INSTALL_PREFIX}/" "" PC_LIB_DIR ${LIB_INSTALL_DIR
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
-find_path(QUAZIP_INCLUDE_DIR NAMES quazipfile.h PATH_SUFFIXES quazip5 quazip)
-find_library(QUAZIP_LIBRARIES quazip5)
+find_package(QuaZip-Qt5 REQUIRED)
 set(CMAKE_AUTOMOC ON)
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_TOLOWER)

@@ -19,7 +19,7 @@ qt5_wrap_ui(FORM_HEADERS ${FORMS})
 
 add_definitions(-DGDBCRASHHANDLER_LIBRARY)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${QUAZIP_INCLUDE_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(GdbCrashHandler SHARED ${SRCS} ${HDRS} ${FORM_HEADERS})
 set_target_properties(GdbCrashHandler PROPERTIES
@@ -29,7 +29,7 @@ set_target_properties(GdbCrashHandler PROPERTIES
 if(WIN32)
     set_target_properties(GdbCrashHandler PROPERTIES SUFFIX "-${GDBCH_SO_VERSION}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif(WIN32)
-target_link_libraries(GdbCrashHandler Qt5::Widgets Qt5::Network ${QUAZIP_LIBRARIES})
+target_link_libraries(GdbCrashHandler Qt5::Widgets Qt5::Network QuaZip::QuaZip)
 
 install(TARGETS GdbCrashHandler
     RUNTIME DESTINATION bin COMPONENT libraries

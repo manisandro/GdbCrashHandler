@@ -38,7 +38,6 @@ static bool gInitialized = true;
 
 static void signalHandler(int signal) {
 	std::signal(signal, nullptr);
-
 	QProcess process;
 	QStringList args = QApplication::arguments();
 	args.removeFirst(); // Remove program path
@@ -121,6 +120,7 @@ void GDBCRASHHANDLER_API init(const Configuration& config, saveCallback_t saveCa
 	parser.parse(qApp->arguments());
 
 	if(parser.isSet(crashHandleOption)) {
+		std::signal(SIGSEGV, signalHandler);
 		int pid = parser.value(crashHandleOption).toInt();
 		QString saveFile;
 		if(parser.isSet(saveFileOption)) {
